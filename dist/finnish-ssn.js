@@ -45,6 +45,34 @@ class FinnishSSN {
         }
     }
     /**
+     * Creates a valid SSN using the given day of month (String), month (String) and year (Integer).
+     * Creates randomly male and female SSN'n.
+     *
+     * @param dayOfMonth as String.
+     * @param month as String.
+     * @param year as Integer.
+     */
+    static createWithDob(dayOfMonth, month, year) {
+        const today = new Date();
+        let centurySign;
+        let checksumBase;
+        let checksum;
+        const rollingId = randomNumber(800) + 99; //  No need for padding when rollingId >= 100
+        centuryMap.forEach((value, key) => {
+            if (value === Math.floor(year / 100) * 100) {
+                centurySign = key;
+            }
+        });
+        if (!birthDayPassed(new Date(year, Number(month) - 1, Number(dayOfMonth)), today)) {
+            year--;
+        }
+        year = year % 100;
+        const yearString = yearToPaddedString(year);
+        checksumBase = parseInt(dayOfMonth + month + yearString + rollingId, 10);
+        checksum = checksumTable[checksumBase % 31];
+        return dayOfMonth + month + yearString + centurySign + rollingId + checksum;
+    }
+    /**
      * Creates a valid SSN using the given age (Integer). Creates randomly male and female SSN'n.
      * In case an invalid age is given, throws exception.
      *

@@ -23,6 +23,15 @@ export declare class FinnishSSN {
      */
     static validate(ssn: string): boolean;
     /**
+     * Creates a valid SSN using the given day of month (String), month (String) and year (Integer).
+     * Creates randomly male and female SSN'n.
+     *
+     * @param dayOfMonth as String.
+     * @param month as String.
+     * @param year as Integer.
+     */
+    static createWithDob(dayOfMonth: string, month: string, year: number): string;
+    /**
      * Creates a valid SSN using the given age (Integer). Creates randomly male and female SSN'n.
      * In case an invalid age is given, throws exception.
      *
